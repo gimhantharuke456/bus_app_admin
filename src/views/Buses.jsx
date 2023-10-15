@@ -3,7 +3,8 @@ import { Table, Button, Modal, Form, Input, Select } from "antd";
 import BusService from "../services/bus_service";
 import RouteService from "../services/route_service";
 import DriverService from "../services/driver_service";
-
+import QrCode from "react-qr-code";
+import QRCode from "react-qr-code";
 const Buses = () => {
   const [buses, setBuses] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,6 +41,12 @@ const Buses = () => {
       key: "status",
     },
     {
+      title: "QR Code",
+      render: (_, record) => (
+        <QrCode id="qrcode" value={`Bus ID: ${record.id}`} size={50} />
+      ),
+    },
+    {
       title: "Actions",
       dataIndex: "actions",
       key: "actions",
@@ -55,6 +62,36 @@ const Buses = () => {
       ),
     },
   ];
+  const handleDownloadQrCode = (busId) => {
+    // Create a virtual link element
+    const link = document.createElement("a");
+
+    // Set link's attributes
+    link.download = `qrcode_bus_${busId}.png`;
+    link.href = createQrCodeDataURL(`Bus ID: ${busId}`);
+
+    // Dispatch a click event to trigger the download
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up the DOM
+    document.body.removeChild(link);
+  };
+  const createQrCodeDataURL = (data) => {
+    // Create a temporary canvas element
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    // Set canvas dimensions
+    canvas.width = 150;
+    canvas.height = 150;
+
+    // Draw the QR Code onto the canvas
+    QRCode.toCanvas(canvas, data, { errorCorrectionLevel: "H" });
+
+    // Return the data URL of the canvas
+    return canvas.toDataURL("image/png");
+  };
 
   const fetchData = async () => {
     try {
