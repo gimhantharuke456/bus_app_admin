@@ -21,6 +21,7 @@ import Supervisors from "./Supervisors";
 import BusRoutes from "./BusRoutes";
 import Schedules from "./Schedules";
 import CrowdedStates from "./CrowdedStates";
+import Reservations from "./Reservations";
 const { Header, Content, Sider } = Layout;
 const authService = AuthService.getInstance();
 const Dashboard = () => {
@@ -53,15 +54,7 @@ const Dashboard = () => {
           >
             Users
           </Menu.Item>
-          <Menu.Item
-            onClick={() => {
-              onDasBoardItemClicked(2);
-            }}
-            key="2"
-            icon={<TeamOutlined />}
-          >
-            Travelers
-          </Menu.Item>
+
           <Menu.Item
             onClick={() => {
               onDasBoardItemClicked(3);
@@ -116,7 +109,16 @@ const Dashboard = () => {
           >
             Crowded Status
           </Menu.Item>
-          <Menu.Item key="9" icon={<LogoutOutlined />} onClick={handleLogout}>
+          <Menu.Item
+            onClick={() => {
+              onDasBoardItemClicked(9);
+            }}
+            key="9"
+            icon={<PercentageOutlined />}
+          >
+            Reservations
+          </Menu.Item>
+          <Menu.Item key="10" icon={<LogoutOutlined />} onClick={handleLogout}>
             Logout
           </Menu.Item>
         </Menu>
@@ -129,7 +131,7 @@ const Dashboard = () => {
         <Content style={{ margin: "24px 16px 0" }}>
           <div style={{ padding: 24, background: "#fff", minHeight: 360 }}>
             {snap.activeIndex == 1 && <Users />}
-            {snap.activeIndex == 2 && <Travellers />}
+            {snap.activeIndex == 9 && <Reservations />}
             {snap.activeIndex == 3 && <Drivers />}
             {snap.activeIndex == 4 && <Buses />}
             {snap.activeIndex == 5 && <Supervisors />}
