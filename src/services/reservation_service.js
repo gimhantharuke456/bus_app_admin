@@ -35,7 +35,10 @@ class ReservationService {
     try {
       const reservationsCollection = collection(db, "reservations");
       const querySnapshot = await getDocs(reservationsCollection);
-      return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      return querySnapshot.docs.map((doc) => ({
+        res_id: doc.id,
+        ...doc.data(),
+      }));
     } catch (error) {
       throw error;
     }
@@ -45,7 +48,10 @@ class ReservationService {
       const reservationsCollection = collection(db, "reservations");
       const q = query(reservationsCollection, where("busId", "==", id));
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      return querySnapshot.docs.map((doc) => ({
+        res_id: doc.id,
+        ...doc.data(),
+      }));
     } catch (error) {
       throw error;
     }

@@ -59,6 +59,18 @@ class UserService {
       throw error;
     }
   }
+  async getTravellerById(userId) {
+    try {
+      const userDoc = doc(db, "csse_ticket_travellers", userId);
+      const userSnapshot = await getDoc(userDoc);
+
+      return userSnapshot.exists()
+        ? { id: userId, ...userSnapshot.data() }
+        : null;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async deleteUser(userId) {
     try {
